@@ -7,8 +7,6 @@ from disnake.ext.commands import CommandSyncFlags
 import app.tree
 from app.env_get import get_env
 
-sys.path.append("C:\\Users\\Егор Брилёв\\Desktop\\aristoc")
-
 intents: disnake.Intents = disnake.Intents.all()
 
 activity: disnake.Activity = disnake.Activity(
