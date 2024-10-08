@@ -1,8 +1,5 @@
-import os
-import sys
 import disnake
 from disnake.ext import commands
-from disnake.ext.commands import CommandSyncFlags
 
 import app.tree
 from app.env_get import get_env
@@ -20,7 +17,6 @@ bot: commands.InteractionBot = commands.InteractionBot(
     status=disnake.Status.idle,
  )
 
-
 @bot.event
 async def on_ready():
     print(f'\033[3;32mBot \033[0m\033[35;1m{bot.user.name}\033[0m\033[3;32m is connected and ready to work!\033[0m')
@@ -32,3 +28,6 @@ for cog in COGS_LIST:
     bot.load_extension(cog)
 
 bot.run(get_env(name="TOKEN"))
+
+stroke = "zxc"
+
