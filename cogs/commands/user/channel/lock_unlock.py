@@ -5,8 +5,6 @@ from app.db_privates import CollectionServers
 
 
 class LockUnlockRoom(commands.Cog):
-    # Конструкция (bot : commands) здесь, чтобы дать IDE представление о том, какой тип данных содержит аргумент.
-    # Это не обязательно, но может быть полезно при разработке.
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         self.db_privates = CollectionActivePrivates()

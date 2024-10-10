@@ -26,9 +26,7 @@ class DataBasePrivatesConnection:
     def __enter__(self):
         self.__connection: Connection = sqlite3.connect(self.__db_file)
         self.cursor: Cursor = self.__connection.cursor()
-        if self.__table_create():
-            print("Table was created")
-        else:
+        if not self.__table_create():
             print("Was an error while creating table")
         return self
     
@@ -110,7 +108,14 @@ class TableActiveChannels():
             print(f"Error deleting table: {e}")
         return False
 
-class TableConnectedServers():
+class Guild:
+    def __init__(self, guild_id: int, channel_id: int, category_id: int) -> None:
+        self.guild_id = guild_id
+        self.channel_id = channel_id
+        self.category_id = category_id
+    
+
+class TableConnectedGuilds():
     def __init__(self) -> None:
         self.__table_name: str = "active"
         self.__table_params: list[list[str]] = [
@@ -118,7 +123,7 @@ class TableConnectedServers():
             ["CATEGORY_ID", "INTEGER"],
             ["CHANNEL_ID", "INTEGER"]
         ]
-        self.servers_id: list[int] = self.__get_servers_id()
+        self.guilds_id: list[int] = self.__get_servers_id()
     
     def __get_servers_id(self):
         try:
@@ -130,31 +135,31 @@ class TableConnectedServers():
             print(f"Error getting server ids")
         return False
 
-    def add(self, guild_id: int, category_id: int, channel_id: int) -> bool:
+    def add(self, guild: Guild) -> bool:
         try: 
             with DataBasePrivatesConnection(self.__table_name, self.__table_params) as db:
                 query = f"INSERT INTO {self.__table_name} VALUES (?, ?, ?)"
-                db.cursor.execute(query, (guild_id, category_id, channel_id))
+                db.cursor.execute(query, (guild.guild_id, guild.category_id, guild.channel_id))
             return True
         except Exception as e: 
             print(f"Error adding channel: {e}")
         return False
      
-    def delete(self, guild_id: int) -> bool:
+    def delete(self, guild: Guild) -> bool:
         try: 
             with DataBasePrivatesConnection(self.__table_name, self.__table_params) as db:
                 query = f"DELETE FROM {self.__table_name} WHERE (?)"
-                db.cursor.execute(query, (guild_id))
+                db.cursor.execute(query, (guild.guild_id))
             return True
         except Exception as e: 
             print(f"Error deleting guild: {e}")
         return False
     
-    def get_data(self, guild_id: int) -> Union[dict, Literal[False]]:
+    def get_data(self, guild: Guild) -> Union[dict, Literal[False]]:
         try: 
             with DataBasePrivatesConnection(self.__table_name, self.__table_params) as db:
                 query = f"SELECT * FROM {self.__table_name} WHERE GUILD_ID = ?"
-                db.cursor.execute(query, (guild_id))
+                db.cursor.execute(query, (guild.guild_id))
                 values: list = list(db.cursor.fetchall()[0])
                 keys: list = [params_list[0] for params_list in self.__table_params]
             return dict(zip(keys, values))
@@ -162,12 +167,11 @@ class TableConnectedServers():
             print(f"Error find channel: {e}")
         return False
 
-    def replace_data(self, guild_id: int, category_id: int, channel_id: int):
+    def replace_data(self, guild: Guild):
         try:
-            if self.delete(guild_id=guild_id) and self.add(guild_id=guild_id, category_id=category_id, channel_id=channel_id):
+            if self.delete(guild=guild) and self.add(guild=guild):
                 return True
         except Exception as e:
             print(f"Error set new owner channel: {e}")
         return False
-    
     

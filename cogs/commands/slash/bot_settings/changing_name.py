@@ -20,7 +20,7 @@ class ChangingCreateChannelName(commands.Cog):
     """
     Команды
     """
-
+    
     @commands.slash_command(name="change", description="Activate bot")
     async def change(self, inter: disnake.GuildCommandInteraction):
         """
