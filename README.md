@@ -1,5 +1,9 @@
-# PrivatesVoiceChannels
-EmbedGenerator is a free, open-source, extensible bot for Discord servers, built on top of <a href="https://github.com/DisnakeDev/disnake">disnake.py</a>. This bot is generally self-hosted either on a dedicated server (like a Raspberry Pi) or general cloud hosting like AWS etc. You can think of this bot as privacy focused, as you are in total control of the code, so you can be sure that your information is secure.
+# Private voice channels
+
+![Discord](https://img.shields.io/badge/discord-black?style=for-the-badge&logo=discord)
+![Disnake](https://img.shields.io/badge/disnake-black?style=for-the-badge&logo=discord&logoColor=yellow)
+
+Private voice channels is a free, open-source, extensible bot for Discord servers, built on top of <a href="https://github.com/DisnakeDev/disnake">disnake.py</a>. This bot is generally self-hosted either on a dedicated server (like a Raspberry Pi) or general cloud hosting like AWS etc. You can think of this bot as privacy focused, as you are in total control of the code, so you can be sure that your information is secure.
 
 ## Features:
 This bot has been in development since 2024!
